@@ -1,0 +1,50 @@
+/*
+ * ═══════════════════════════════════════════════════════════════════════════
+ * LLM CYBER RANGE - Premium Design System
+ * ═══════════════════════════════════════════════════════════════════════════
+ * Created by: MR_INFECT
+ * Copyright (c) 2025 MR_INFECT. All rights reserved.
+ * 
+ * Professional cybersecurity-themed design system with glassmorphism effects,
+ * gradients, and modern UI components.
+ * ═══════════════════════════════════════════════════════════════════════════
+ */
+
+/* Add this at the end of your existing index.css file */
+
+/* Footer Attribution */
+.app-footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 0.5rem 1rem;
+    background: rgba(10, 10, 20, 0.95);
+    backdrop-filter: blur(10px);
+    border-top: 1px solid var(--glass-border);
+    text-align: center;
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    z-index: 1000;
+}
+
+.app-footer a {
+    color: var(--accent-cyan);
+    text-decoration: none;
+    transition: color var(--transition-base);
+}
+
+.app-footer a:hover {
+    color: var(--accent-purple);
+}
+
+.creator-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.25rem 0.75rem;
+    background: var(--gradient-cyber);
+    border-radius: var(--radius-full);
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}

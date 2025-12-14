@@ -1,0 +1,78 @@
+# ═══════════════════════════════════════════════════════════════════════════
+# LLM CYBER RANGE - Git Ignore Configuration
+# Created by: MR_INFECT | Copyright (c) 2025 MR_INFECT
+# ═══════════════════════════════════════════════════════════════════════════
+
+# Dependencies
+node_modules/
+server/node_modules/
+client/node_modules/
+
+# Build outputs
+dist/
+build/
+client/dist/
+server/dist/
+
+# Environment files
+.env
+.env.local
+.env.*.local
+server/.env
+client/.env
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+logs/
+
+# Editor directories
+.vscode/*
+!.vscode/extensions.json
+.idea/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+
+# Testing
+coverage/
+.nyc_output/
+*.lcov
+
+# Database
+postgres_data/
+*.db
+*.sqlite
+*.sqlite3
+
+# Uploads
+server/uploads/*
+!server/uploads/.gitkeep
+
+# Temporary files
+*.tmp
+*.temp
+.cache/
+
+# Production
+.next/
+.nuxt/
+.serverless/
+
+# Misc
+.eslintcache
+.stylelintcache
+*.tsbuildinfo
+.yarn-integrity

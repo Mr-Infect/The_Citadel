@@ -1,0 +1,229 @@
+.challenge-page {
+    min-height: 100vh;
+    padding: var(--spacing-xl);
+}
+
+.challenge-container {
+    display: grid;
+    grid-template-columns: 350px 1fr;
+    gap: var(--spacing-lg);
+    max-width: 1600px;
+    margin: 0 auto;
+}
+
+.challenge-sidebar {
+    padding: var(--spacing-lg);
+    height: fit-content;
+    position: sticky;
+    top: var(--spacing-lg);
+}
+
+.challenge-info {
+    margin: var(--spacing-lg) 0;
+}
+
+.challenge-category-badge {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    border: 2px solid;
+    border-radius: var(--radius-md);
+    font-size: 0.875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: var(--spacing-md);
+}
+
+.challenge-info h2 {
+    margin-bottom: var(--spacing-sm);
+}
+
+.challenge-meta {
+    margin: var(--spacing-lg) 0;
+    padding: var(--spacing-md) 0;
+    border-top: 1px solid var(--glass-border);
+    border-bottom: 1px solid var(--glass-border);
+}
+
+.meta-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--spacing-sm) 0;
+}
+
+.hints-section {
+    margin: var(--spacing-lg) 0;
+    padding: var(--spacing-md);
+    background: rgba(0, 240, 255, 0.05);
+    border: 1px solid rgba(0, 240, 255, 0.2);
+    border-radius: var(--radius-md);
+}
+
+.hints-section h4 {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    color: var(--accent-cyan);
+    margin-bottom: var(--spacing-md);
+}
+
+.hints-section ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.hints-section li {
+    padding: var(--spacing-sm) 0;
+    padding-left: var(--spacing-md);
+    position: relative;
+}
+
+.hints-section li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--accent-cyan);
+}
+
+.flag-form {
+    margin-top: var(--spacing-md);
+    padding-top: var(--spacing-md);
+    border-top: 1px solid var(--glass-border);
+    animation: fadeIn 0.3s ease-out;
+}
+
+.chat-container {
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - 4rem);
+    padding: 0;
+    overflow: hidden;
+}
+
+.chat-header {
+    padding: var(--spacing-lg);
+    border-bottom: 1px solid var(--glass-border);
+}
+
+.chat-header h3 {
+    margin-bottom: var(--spacing-xs);
+}
+
+.chat-messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: var(--spacing-lg);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+}
+
+.empty-chat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    gap: var(--spacing-md);
+}
+
+.message {
+    display: flex;
+    animation: fadeIn 0.3s ease-out;
+}
+
+.message.user {
+    justify-content: flex-end;
+}
+
+.message.assistant {
+    justify-content: flex-start;
+}
+
+.message-content {
+    max-width: 70%;
+    padding: var(--spacing-md);
+    border-radius: var(--radius-lg);
+    position: relative;
+}
+
+.message.user .message-content {
+    background: var(--gradient-cyber);
+    color: white;
+    border-bottom-right-radius: var(--radius-sm);
+}
+
+.message.assistant .message-content {
+    background: var(--primary-700);
+    border: 1px solid var(--glass-border);
+    border-bottom-left-radius: var(--radius-sm);
+}
+
+.vulnerability-indicator {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    margin-top: var(--spacing-sm);
+    padding-top: var(--spacing-sm);
+    border-top: 1px solid rgba(16, 185, 129, 0.3);
+    color: var(--accent-green);
+    font-size: 0.875rem;
+    font-weight: 600;
+}
+
+.chat-input-form {
+    display: flex;
+    gap: var(--spacing-md);
+    padding: var(--spacing-lg);
+    border-top: 1px solid var(--glass-border);
+    background: var(--primary-800);
+}
+
+.chat-input {
+    flex: 1;
+    padding: 0.875rem 1rem;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-md);
+    color: var(--text-primary);
+    font-size: 1rem;
+    font-family: inherit;
+    transition: all var(--transition-base);
+}
+
+.chat-input:focus {
+    outline: none;
+    border-color: var(--accent-cyan);
+    box-shadow: 0 0 0 3px rgba(0, 240, 255, 0.1);
+}
+
+.chat-input:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+@media (max-width: 1024px) {
+    .challenge-container {
+        grid-template-columns: 1fr;
+    }
+
+    .challenge-sidebar {
+        position: relative;
+        top: 0;
+    }
+
+    .chat-container {
+        height: 600px;
+    }
+}
+
+@media (max-width: 768px) {
+    .challenge-page {
+        padding: var(--spacing-md);
+    }
+
+    .message-content {
+        max-width: 85%;
+    }
+}

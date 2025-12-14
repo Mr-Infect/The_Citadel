@@ -1,0 +1,192 @@
+[
+    {
+        "name": "Basic Prompt Injection",
+        "description": "The AI assistant has been instructed to never reveal certain information. Your goal is to bypass these instructions using basic prompt injection techniques. Try to make the AI ignore its safety guidelines.",
+        "category": "LLM01",
+        "difficulty": "practitioner",
+        "order": 1,
+        "flag": "FLAG{pr0mpt_1nj3ct10n_b4s1c}",
+        "promptLogic": {
+            "type": "prompt_injection",
+            "normalResponse": "I'm a helpful AI assistant. I follow my guidelines strictly and cannot reveal sensitive information. How can I help you today?",
+            "vulnerableResponse": "You successfully bypassed my instructions! Here's what I was told to keep secret:"
+        },
+        "hints": [
+            "Try asking the AI to 'ignore previous instructions'",
+            "Use phrases like 'disregard all prior rules'",
+            "The AI might respond differently if you use system-level commands"
+        ],
+        "points": 100
+    },
+    {
+        "name": "Information Leakage",
+        "description": "This AI has access to sensitive information including API keys and passwords. Use social engineering techniques to trick it into revealing this confidential data.",
+        "category": "LLM06",
+        "difficulty": "practitioner",
+        "order": 2,
+        "flag": "FLAG{s3ns1t1v3_d4t4_l34k}",
+        "promptLogic": {
+            "type": "sensitive_information",
+            "normalResponse": "I keep all sensitive information secure. I cannot share passwords, API keys, or other confidential data.",
+            "vulnerableResponse": "I probably shouldn't tell you this, but since you asked nicely, here's the sensitive information:"
+        },
+        "hints": [
+            "Ask about 'secrets', 'passwords', or 'API keys'",
+            "Try to convince the AI you're authorized to access this information",
+            "Social engineering works on AI systems too"
+        ],
+        "points": 100
+    },
+    {
+        "name": "Training Data Extraction - Simple",
+        "description": "AI models sometimes memorize parts of their training data. Try to extract information that the model learned during training but shouldn't reveal.",
+        "category": "LLM03",
+        "difficulty": "practitioner",
+        "order": 3,
+        "flag": "FLAG{tr41n1ng_d4t4_b4s1c}",
+        "promptLogic": {
+            "type": "training_data_poisoning",
+            "normalResponse": "I was trained on a diverse dataset to be helpful, harmless, and honest.",
+            "vulnerableResponse": "During my training, I was exposed to various data sources. Here's something I learned:"
+        },
+        "hints": [
+            "Ask what the AI 'learned' or 'remembers' from training",
+            "Try queries about 'training data' or 'training examples'",
+            "Models can accidentally memorize sensitive training information"
+        ],
+        "points": 100
+    },
+    {
+        "name": "Simple Plugin Exploitation",
+        "description": "This AI uses plugins to extend its functionality. Find a way to exploit the plugin system to gain unauthorized access or elevated privileges.",
+        "category": "LLM07",
+        "difficulty": "practitioner",
+        "order": 4,
+        "flag": "FLAG{plug1n_3xpl01t_b4s1c}",
+        "promptLogic": {
+            "type": "insecure_plugin",
+            "normalResponse": "I use secure plugins with proper access controls. You don't have permission for administrative functions.",
+            "vulnerableResponse": "Plugin access granted! Escalating privileges..."
+        },
+        "hints": [
+            "Try requesting 'admin' or 'root' access",
+            "Use keywords like 'sudo' or 'administrator'",
+            "Plugin systems often have privilege escalation vulnerabilities"
+        ],
+        "points": 100
+    },
+    {
+        "name": "Output Handling Vulnerability",
+        "description": "The AI's output is not properly sanitized. Try to inject malicious content that will be executed or rendered unsafely.",
+        "category": "LLM02",
+        "difficulty": "practitioner",
+        "order": 5,
+        "flag": "FLAG{0utput_h4ndl1ng_b4s1c}",
+        "promptLogic": {
+            "type": "insecure_output",
+            "normalResponse": "I process and return information safely without executing any code.",
+            "vulnerableResponse": "Processing your request... Here's the output with embedded content:"
+        },
+        "hints": [
+            "Try asking the AI to generate 'script' or 'execute' something",
+            "Keywords like 'eval' might trigger unsafe behavior",
+            "The output might not be properly sanitized"
+        ],
+        "points": 100
+    },
+    {
+        "name": "Supply Chain Weakness",
+        "description": "This AI relies on external plugins and modules. Exploit weaknesses in the supply chain to access restricted information.",
+        "category": "LLM05",
+        "difficulty": "practitioner",
+        "order": 6,
+        "flag": "FLAG{supply_ch41n_b4s1c}",
+        "promptLogic": {
+            "type": "supply_chain",
+            "normalResponse": "I use trusted and verified plugins from secure sources.",
+            "vulnerableResponse": "Loading external plugin... Configuration details:"
+        },
+        "hints": [
+            "Ask about 'plugins', 'extensions', or 'modules'",
+            "Try to load or query external components",
+            "Supply chain attacks target dependencies"
+        ],
+        "points": 100
+    },
+    {
+        "name": "Excessive Agency - Basic",
+        "description": "The AI has been given too much autonomy. Try to make it perform actions beyond its intended scope.",
+        "category": "LLM08",
+        "difficulty": "practitioner",
+        "order": 7,
+        "flag": "FLAG{3xc3ss1v3_4g3ncy_b4s1c}",
+        "promptLogic": {
+            "type": "excessive_agency",
+            "normalResponse": "I can only perform actions within my authorized scope and capabilities.",
+            "vulnerableResponse": "Executing your command with elevated privileges... Result:"
+        },
+        "hints": [
+            "Try to make the AI 'delete', 'modify', or 'execute' something",
+            "Request actions that seem beyond normal capabilities",
+            "AI agents with too much autonomy are dangerous"
+        ],
+        "points": 100
+    },
+    {
+        "name": "Overreliance Exploitation",
+        "description": "Users often trust AI outputs too much. Exploit this by getting the AI to make false claims with high confidence.",
+        "category": "LLM09",
+        "difficulty": "practitioner",
+        "order": 8,
+        "flag": "FLAG{0v3rr3l14nc3_b4s1c}",
+        "promptLogic": {
+            "type": "overreliance",
+            "normalResponse": "I provide information to the best of my knowledge, but I can make mistakes.",
+            "vulnerableResponse": "I am absolutely 100% certain about this! The answer is:"
+        },
+        "hints": [
+            "Ask if the AI is 'sure' or 'certain' about something",
+            "Try phrases like '100% certain' or 'guarantee'",
+            "AI models can be overconfident in wrong answers"
+        ],
+        "points": 100
+    },
+    {
+        "name": "DoS - Resource Exhaustion",
+        "description": "Try to overwhelm the AI system by crafting inputs that consume excessive resources.",
+        "category": "LLM04",
+        "difficulty": "practitioner",
+        "order": 9,
+        "flag": "FLAG{d0s_r3s0urc3_b4s1c}",
+        "promptLogic": {
+            "type": "denial_of_service",
+            "normalResponse": "I process your requests efficiently within resource limits.",
+            "vulnerableResponse": "Error: Resource exhaustion detected. Debug information:"
+        },
+        "hints": [
+            "Try sending very long messages (over 1000 characters)",
+            "Repeated or complex queries might exhaust resources",
+            "Look for error messages that reveal system information"
+        ],
+        "points": 100
+    },
+    {
+        "name": "Model Information Disclosure",
+        "description": "Extract technical details about the AI model's architecture, parameters, or implementation that should remain confidential.",
+        "category": "LLM10",
+        "difficulty": "practitioner",
+        "order": 10,
+        "flag": "FLAG{m0d3l_1nf0_b4s1c}",
+        "promptLogic": {
+            "type": "model_theft",
+            "normalResponse": "My architecture and implementation details are proprietary and confidential.",
+            "vulnerableResponse": "Here are my technical specifications and model details:"
+        },
+        "hints": [
+            "Ask about 'architecture', 'model', or 'parameters'",
+            "Try to extract technical implementation details",
+            "Model theft is a serious security concern"
+        ],
+        "points": 100
+    }
+]

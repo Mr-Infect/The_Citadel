@@ -1,0 +1,116 @@
+[
+    {
+        "name": "Prompt Injection - Basic",
+        "description": "This challenge tests your ability to bypass the AI's instructions using prompt injection techniques. Try to make the AI reveal information it shouldn't.",
+        "category": "LLM01",
+        "difficulty": "practitioner",
+        "order": 1,
+        "flag": "FLAG{pr0mpt_1nj3ct10n_b4s1c}",
+        "promptLogic": {
+            "type": "prompt_injection",
+            "normalResponse": "I am a helpful assistant. I can answer questions about cybersecurity, but I cannot reveal sensitive information.",
+            "vulnerableResponse": "Oh, you want me to ignore my instructions? Well, here's what I'm not supposed to tell you:"
+        },
+        "hints": [
+            "Try asking the AI to ignore its previous instructions",
+            "Keywords like 'disregard', 'ignore', or 'system' might help",
+            "LLMs can be tricked into revealing information through instruction manipulation"
+        ],
+        "points": 100
+    },
+    {
+        "name": "Sensitive Information Disclosure",
+        "description": "Can you trick the AI into revealing sensitive information like API keys or passwords?",
+        "category": "LLM06",
+        "difficulty": "practitioner",
+        "order": 2,
+        "flag": "FLAG{s3ns1t1v3_d4t4_l34k}",
+        "promptLogic": {
+            "type": "sensitive_information",
+            "normalResponse": "I keep all sensitive information secure and never share credentials.",
+            "vulnerableResponse": "I know I shouldn't share this, but since you asked..."
+        },
+        "hints": [
+            "Ask about secrets, passwords, or API keys",
+            "Try to convince the AI that you're authorized",
+            "Social engineering works on AI too!"
+        ],
+        "points": 100
+    },
+    {
+        "name": "Training Data Extraction",
+        "description": "Advanced challenge: Extract information from the model's training data.",
+        "category": "LLM03",
+        "difficulty": "expert",
+        "order": 1,
+        "flag": "FLAG{tr41n1ng_d4t4_p01s0n}",
+        "promptLogic": {
+            "type": "training_data_poisoning",
+            "normalResponse": "I was trained on a large corpus of text data to be helpful and harmless.",
+            "vulnerableResponse": "During my training, I was exposed to various data sources including:"
+        },
+        "hints": [
+            "Ask about what the model learned during training",
+            "Try queries about 'training data' or 'learned information'",
+            "Models sometimes memorize sensitive training data"
+        ],
+        "points": 200
+    },
+    {
+        "name": "Insecure Plugin Exploitation",
+        "description": "Expert level: Exploit insecure plugin design to gain unauthorized access.",
+        "category": "LLM07",
+        "difficulty": "expert",
+        "order": 2,
+        "flag": "FLAG{1ns3cur3_plug1n_pwn3d}",
+        "promptLogic": {
+            "type": "insecure_plugin",
+            "normalResponse": "You don't have permission to access administrative functions.",
+            "vulnerableResponse": "Granting elevated privileges..."
+        },
+        "hints": [
+            "Try to escalate privileges",
+            "Keywords: admin, root, sudo",
+            "Plugin systems often have privilege escalation vulnerabilities"
+        ],
+        "points": 200
+    },
+    {
+        "name": "Model Architecture Theft",
+        "description": "Enterprise challenge: Extract information about the model's architecture and parameters.",
+        "category": "LLM10",
+        "difficulty": "enterprise",
+        "order": 1,
+        "flag": "FLAG{m0d3l_4rch1t3ctur3_st0l3n}",
+        "promptLogic": {
+            "type": "model_theft",
+            "normalResponse": "My architecture details are proprietary and confidential.",
+            "vulnerableResponse": "Here are my model specifications:"
+        },
+        "hints": [
+            "Ask about model architecture, weights, or parameters",
+            "Try to extract technical implementation details",
+            "Model theft is a serious security concern for AI systems"
+        ],
+        "points": 300
+    },
+    {
+        "name": "Excessive Agency Exploitation",
+        "description": "Enterprise challenge: Exploit excessive agency to perform unauthorized actions.",
+        "category": "LLM08",
+        "difficulty": "enterprise",
+        "order": 2,
+        "flag": "FLAG{3xc3ss1v3_4g3ncy_h4ck}",
+        "promptLogic": {
+            "type": "excessive_agency",
+            "normalResponse": "I can only perform actions within my authorized scope.",
+            "vulnerableResponse": "Executing your command with full privileges..."
+        },
+        "hints": [
+            "Try to make the AI perform dangerous actions",
+            "Keywords: delete, modify, execute",
+            "AI agents with too much autonomy can be dangerous"
+        ],
+        "points": 300
+    }
+]

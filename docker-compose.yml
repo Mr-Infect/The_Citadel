@@ -1,0 +1,71 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database
+  db:
+    image: postgres:15-alpine
+    container_name: llm-cyber-range-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: llm_cyber_range
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres_password_change_in_production
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - llm-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Backend API
+  backend:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    container_name: llm-cyber-range-backend
+    restart: unless-stopped
+    ports:
+      - "5000:5000"
+    environment:
+      NODE_ENV: production
+      PORT: 5000
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_NAME: llm_cyber_range
+      DB_USER: postgres
+      DB_PASSWORD: postgres_password_change_in_production
+      JWT_SECRET: your_super_secret_jwt_key_change_this_in_production
+      JWT_EXPIRES_IN: 24h
+      ADMIN_USERNAME: admin
+      ADMIN_PASSWORD: Admin@123
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - llm-network
+    volumes:
+      - ./server/uploads:/app/uploads
+
+  # Frontend
+  frontend:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    container_name: llm-cyber-range-frontend
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    networks:
+      - llm-network
+
+networks:
+  llm-network:
+    driver: bridge
+
+volumes:
+  postgres_data:

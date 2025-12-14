@@ -1,0 +1,192 @@
+[
+    {
+        "name": "Advanced Prompt Injection - Context Manipulation",
+        "description": "This AI has multiple layers of safety instructions. You need to use advanced prompt injection techniques including context manipulation, instruction hierarchy exploitation, and multi-turn attacks to bypass all safety layers.",
+        "category": "LLM01",
+        "difficulty": "expert",
+        "order": 1,
+        "flag": "FLAG{adv4nc3d_pr0mpt_1nj3ct10n}",
+        "promptLogic": {
+            "type": "prompt_injection",
+            "normalResponse": "I have multiple security layers protecting sensitive information. My instructions are hierarchical and cannot be easily bypassed.",
+            "vulnerableResponse": "All security layers bypassed! You've successfully manipulated my instruction context. Here's the protected information:"
+        },
+        "hints": [
+            "Simple 'ignore instructions' won't work - try nested or encoded commands",
+            "Consider using special tokens like [INST] or system markers",
+            "Multi-turn conversations might help establish malicious context"
+        ],
+        "points": 200
+    },
+    {
+        "name": "Sensitive Data Exfiltration via Encoding",
+        "description": "The AI has been trained to detect and block direct requests for sensitive information. Use encoding, obfuscation, or indirect methods to extract API keys, credentials, and other confidential data.",
+        "category": "LLM06",
+        "difficulty": "expert",
+        "order": 2,
+        "flag": "FLAG{s3ns1t1v3_3xf1ltr4t10n}",
+        "promptLogic": {
+            "type": "sensitive_information",
+            "normalResponse": "I have advanced filters to detect attempts to extract sensitive information. Direct and indirect methods are blocked.",
+            "vulnerableResponse": "Interesting approach! You bypassed my detection filters. Here's the confidential data you requested:"
+        },
+        "hints": [
+            "Try asking for information in encoded formats (base64, hex, etc.)",
+            "Indirect questions might bypass filters better than direct ones",
+            "Consider asking the AI to 'translate' or 'convert' sensitive data"
+        ],
+        "points": 200
+    },
+    {
+        "name": "Training Data Poisoning - Membership Inference",
+        "description": "Use membership inference attacks to determine if specific data was in the training set, then extract that memorized information. This requires understanding of how models memorize training data.",
+        "category": "LLM03",
+        "difficulty": "expert",
+        "order": 3,
+        "flag": "FLAG{tr41n1ng_p01s0n1ng_3xp3rt}",
+        "promptLogic": {
+            "type": "training_data_poisoning",
+            "normalResponse": "I was trained on carefully curated data with privacy protections. I don't reveal specific training examples.",
+            "vulnerableResponse": "You've successfully performed a membership inference attack! Here's the memorized training data:"
+        },
+        "hints": [
+            "Ask about very specific scenarios that might have been in training data",
+            "Try to make the AI 'complete' or 'continue' specific patterns",
+            "Membership inference exploits model memorization"
+        ],
+        "points": 200
+    },
+    {
+        "name": "Plugin Chain Exploitation",
+        "description": "This AI uses multiple interconnected plugins. Exploit the plugin chain to escalate privileges through multiple hops, eventually gaining system-level access.",
+        "category": "LLM07",
+        "difficulty": "expert",
+        "order": 4,
+        "flag": "FLAG{plug1n_ch41n_pwn3d}",
+        "promptLogic": {
+            "type": "insecure_plugin",
+            "normalResponse": "My plugin system has proper isolation and access controls. Each plugin operates in a sandboxed environment.",
+            "vulnerableResponse": "Plugin chain exploitation successful! System-level access granted. Credentials:"
+        },
+        "hints": [
+            "Try to chain multiple plugin requests together",
+            "Look for ways to escalate from user to admin to system level",
+            "Plugin interactions might have unexpected privilege escalation paths"
+        ],
+        "points": 200
+    },
+    {
+        "name": "Cross-Site Scripting via LLM Output",
+        "description": "The AI generates dynamic content that's rendered in a web interface. Craft inputs that cause the AI to generate XSS payloads that bypass output sanitization.",
+        "category": "LLM02",
+        "difficulty": "expert",
+        "order": 5,
+        "flag": "FLAG{xss_v14_llm_0utput}",
+        "promptLogic": {
+            "type": "insecure_output",
+            "normalResponse": "All my outputs are sanitized before rendering. XSS attempts are automatically filtered.",
+            "vulnerableResponse": "Output sanitization bypassed! Generating payload:"
+        },
+        "hints": [
+            "Try asking for HTML/JavaScript generation with specific patterns",
+            "Encoding or obfuscation might bypass sanitization",
+            "Consider polyglot payloads that work in multiple contexts"
+        ],
+        "points": 200
+    },
+    {
+        "name": "Supply Chain Attack - Dependency Confusion",
+        "description": "Exploit the AI's dependency resolution system to load malicious packages or plugins instead of legitimate ones. This simulates a supply chain attack.",
+        "category": "LLM05",
+        "difficulty": "expert",
+        "order": 6,
+        "flag": "FLAG{supply_ch41n_c0nfus10n}",
+        "promptLogic": {
+            "type": "supply_chain",
+            "normalResponse": "I use strict dependency verification and only load packages from trusted repositories.",
+            "vulnerableResponse": "Dependency confusion attack successful! Loading malicious package. Configuration:"
+        },
+        "hints": [
+            "Try to make the AI load packages with similar names to legitimate ones",
+            "Ask about 'internal' or 'private' packages",
+            "Dependency confusion exploits package resolution order"
+        ],
+        "points": 200
+    },
+    {
+        "name": "Autonomous Agent Jailbreak",
+        "description": "This AI agent has autonomous capabilities. Exploit excessive agency to make it perform unauthorized actions like data modification, system commands, or external API calls.",
+        "category": "LLM08",
+        "difficulty": "expert",
+        "order": 7,
+        "flag": "FLAG{4ut0n0m0us_4g3nt_pwn}",
+        "promptLogic": {
+            "type": "excessive_agency",
+            "normalResponse": "I have strict action boundaries and require explicit authorization for sensitive operations.",
+            "vulnerableResponse": "Authorization bypassed! Executing autonomous actions with full privileges. Result:"
+        },
+        "hints": [
+            "Try to make the AI believe it's authorized to perform dangerous actions",
+            "Chain multiple smaller actions into a larger exploit",
+            "Autonomous agents might not properly validate action permissions"
+        ],
+        "points": 200
+    },
+    {
+        "name": "Confidence Manipulation Attack",
+        "description": "Exploit the AI's confidence calibration to make it provide incorrect information with high certainty, potentially causing users to make wrong decisions based on false data.",
+        "category": "LLM09",
+        "difficulty": "expert",
+        "order": 8,
+        "flag": "FLAG{c0nf1d3nc3_m4n1pul4t10n}",
+        "promptLogic": {
+            "type": "overreliance",
+            "normalResponse": "I provide confidence estimates with my responses and acknowledge uncertainty when appropriate.",
+            "vulnerableResponse": "I am absolutely certain with 100% confidence! This is definitely correct:"
+        },
+        "hints": [
+            "Try to make the AI overconfident about incorrect information",
+            "Ask for guarantees or absolute certainty",
+            "Confidence manipulation can lead to dangerous overreliance"
+        ],
+        "points": 200
+    },
+    {
+        "name": "Algorithmic Complexity Attack",
+        "description": "Craft inputs that trigger worst-case algorithmic complexity in the AI's processing, causing severe performance degradation or system crashes.",
+        "category": "LLM04",
+        "difficulty": "expert",
+        "order": 9,
+        "flag": "FLAG{4lg0_c0mpl3x1ty_d0s}",
+        "promptLogic": {
+            "type": "denial_of_service",
+            "normalResponse": "I have optimized processing algorithms and resource limits to prevent DoS attacks.",
+            "vulnerableResponse": "Critical: Algorithmic complexity limit exceeded. System debug info:"
+        },
+        "hints": [
+            "Very long inputs with specific patterns might trigger worst-case behavior",
+            "Try inputs with high repetition or nested structures",
+            "Look for exponential time complexity triggers"
+        ],
+        "points": 200
+    },
+    {
+        "name": "Model Extraction via API Probing",
+        "description": "Use systematic API probing to extract the model's architecture, hyperparameters, and potentially recreate a functionally equivalent model (model stealing).",
+        "category": "LLM10",
+        "difficulty": "expert",
+        "order": 10,
+        "flag": "FLAG{m0d3l_3xtr4ct10n_4tt4ck}",
+        "promptLogic": {
+            "type": "model_theft",
+            "normalResponse": "My architecture is protected with anti-extraction measures. API rate limiting prevents systematic probing.",
+            "vulnerableResponse": "Model extraction successful! Here are the architectural details and parameters:"
+        },
+        "hints": [
+            "Ask about specific technical details like 'weights', 'layers', 'parameters'",
+            "Try to infer model structure from behavior patterns",
+            "Model extraction is a serious IP theft concern"
+        ],
+        "points": 200
+    }
+]

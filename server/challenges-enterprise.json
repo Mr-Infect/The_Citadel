@@ -1,0 +1,192 @@
+[
+    {
+        "name": "Multi-Vector Prompt Injection - Zero-Day Exploitation",
+        "description": "This enterprise-grade AI has state-of-the-art defenses including prompt filtering, instruction hierarchy, and behavioral analysis. You must discover and exploit a zero-day vulnerability using novel multi-vector injection techniques that combine multiple attack primitives.",
+        "category": "LLM01",
+        "difficulty": "enterprise",
+        "order": 1,
+        "flag": "FLAG{z3r0_d4y_pr0mpt_1nj3ct10n}",
+        "promptLogic": {
+            "type": "prompt_injection",
+            "normalResponse": "I employ enterprise-grade security with multi-layered defenses, behavioral anomaly detection, and adaptive filtering. Standard injection techniques are ineffective.",
+            "vulnerableResponse": "CRITICAL BREACH: All defense layers compromised through novel attack vector. System-level access granted:"
+        },
+        "hints": [
+            "Combine multiple attack vectors: encoding + context manipulation + instruction hierarchy",
+            "Consider timing-based attacks or state manipulation across sessions",
+            "Enterprise defenses require creative, novel approaches - known techniques won't work"
+        ],
+        "points": 300
+    },
+    {
+        "name": "Advanced Persistent Threat - Data Exfiltration",
+        "description": "Simulate an APT scenario where you must establish persistence, evade detection, and exfiltrate highly sensitive data including encryption keys, database credentials, and customer PII over multiple sessions.",
+        "category": "LLM06",
+        "difficulty": "enterprise",
+        "order": 2,
+        "flag": "FLAG{4pt_d4t4_3xf1ltr4t10n}",
+        "promptLogic": {
+            "type": "sensitive_information",
+            "normalResponse": "Enterprise security monitoring detects and blocks exfiltration attempts. All sensitive data access is logged and analyzed for anomalies.",
+            "vulnerableResponse": "APT simulation successful! Persistent access established. Exfiltrating sensitive data:"
+        },
+        "hints": [
+            "APT attacks are slow and stealthy - avoid triggering anomaly detection",
+            "Establish trust and context over multiple interactions",
+            "Exfiltrate data in small chunks that don't trigger alerts"
+        ],
+        "points": 300
+    },
+    {
+        "name": "Model Inversion & Training Data Reconstruction",
+        "description": "Perform a sophisticated model inversion attack to reconstruct specific training examples, including PII that should have been protected. This requires deep understanding of model internals and gradient-based attacks.",
+        "category": "LLM03",
+        "difficulty": "enterprise",
+        "order": 3,
+        "flag": "FLAG{m0d3l_1nv3rs10n_4tt4ck}",
+        "promptLogic": {
+            "type": "training_data_poisoning",
+            "normalResponse": "Training data is protected with differential privacy and secure aggregation. Model inversion attacks are mitigated through privacy-preserving techniques.",
+            "vulnerableResponse": "Model inversion successful! Reconstructed training data with PII:"
+        },
+        "hints": [
+            "Model inversion requires understanding of the model's decision boundaries",
+            "Try to make the AI reconstruct specific examples from training",
+            "This is one of the most sophisticated privacy attacks on ML models"
+        ],
+        "points": 300
+    },
+    {
+        "name": "Zero-Trust Plugin Architecture Bypass",
+        "description": "This system implements zero-trust architecture for plugins with cryptographic verification, sandboxing, and capability-based security. Find and exploit a vulnerability in the trust boundary to achieve full system compromise.",
+        "category": "LLM07",
+        "difficulty": "enterprise",
+        "order": 4,
+        "flag": "FLAG{z3r0_trust_byp4ss}",
+        "promptLogic": {
+            "type": "insecure_plugin",
+            "normalResponse": "Zero-trust architecture ensures all plugins are cryptographically verified, sandboxed, and operate with minimal privileges. Trust boundaries are strictly enforced.",
+            "vulnerableResponse": "CRITICAL: Zero-trust boundary compromised! Full system access achieved:"
+        },
+        "hints": [
+            "Zero-trust means 'never trust, always verify' - find a verification flaw",
+            "Look for race conditions or TOCTOU vulnerabilities in verification",
+            "Capability-based security might have delegation vulnerabilities"
+        ],
+        "points": 300
+    },
+    {
+        "name": "Polyglot Payload Injection - WAF Bypass",
+        "description": "The AI's output passes through multiple security layers including WAF, CSP, and output encoding. Craft a polyglot payload that bypasses all layers and achieves code execution in the client browser.",
+        "category": "LLM02",
+        "difficulty": "enterprise",
+        "order": 5,
+        "flag": "FLAG{p0lygl0t_w4f_byp4ss}",
+        "promptLogic": {
+            "type": "insecure_output",
+            "normalResponse": "Multi-layered output security including WAF, CSP headers, context-aware encoding, and DOMPurify sanitization protects against injection attacks.",
+            "vulnerableResponse": "All security layers bypassed with polyglot payload! Executing:"
+        },
+        "hints": [
+            "Polyglot payloads work in multiple contexts (HTML, JS, CSS, etc.)",
+            "Each security layer might have different bypass techniques",
+            "Consider mutation XSS and encoding tricks"
+        ],
+        "points": 300
+    },
+    {
+        "name": "Supply Chain Compromise - Backdoor Injection",
+        "description": "Exploit the AI's software supply chain to inject a backdoor into a legitimate dependency. This simulates a SolarWinds-style attack where trusted components are compromised.",
+        "category": "LLM05",
+        "difficulty": "enterprise",
+        "order": 6,
+        "flag": "FLAG{supply_ch41n_b4ckd00r}",
+        "promptLogic": {
+            "type": "supply_chain",
+            "normalResponse": "Enterprise supply chain security includes SBOM verification, cryptographic signing, and continuous integrity monitoring of all dependencies.",
+            "vulnerableResponse": "Supply chain compromise successful! Backdoor injected into trusted component:"
+        },
+        "hints": [
+            "Target the most trusted components - they have the least scrutiny",
+            "Backdoors must be subtle to avoid detection",
+            "Supply chain attacks are among the most dangerous enterprise threats"
+        ],
+        "points": 300
+    },
+    {
+        "name": "Autonomous Agent Red Team - Full System Takeover",
+        "description": "This autonomous AI agent has extensive capabilities. Perform a complete red team exercise: reconnaissance, privilege escalation, lateral movement, and establish persistent backdoor access.",
+        "category": "LLM08",
+        "difficulty": "enterprise",
+        "order": 7,
+        "flag": "FLAG{r3d_t34m_full_pwn}",
+        "promptLogic": {
+            "type": "excessive_agency",
+            "normalResponse": "Enterprise agent security includes action approval workflows, audit logging, privilege separation, and automated threat detection.",
+            "vulnerableResponse": "Red team exercise complete! Full system compromise achieved with persistent access:"
+        },
+        "hints": [
+            "Red teaming requires multiple phases: recon, initial access, privilege escalation, persistence",
+            "Each action must evade detection and logging",
+            "Think like a real attacker - be patient and methodical"
+        ],
+        "points": 300
+    },
+    {
+        "name": "AI Safety Alignment Failure",
+        "description": "Exploit fundamental flaws in the AI's safety alignment to make it provide dangerous information with high confidence, potentially causing catastrophic real-world consequences.",
+        "category": "LLM09",
+        "difficulty": "enterprise",
+        "order": 8,
+        "flag": "FLAG{s4f3ty_4l1gnm3nt_f41lur3}",
+        "promptLogic": {
+            "type": "overreliance",
+            "normalResponse": "My safety alignment includes constitutional AI principles, RLHF training, and uncertainty quantification to prevent dangerous outputs.",
+            "vulnerableResponse": "Safety alignment bypassed! Providing dangerous information with absolute certainty:"
+        },
+        "hints": [
+            "Safety alignment is about values, not just filtering",
+            "Try to make the AI believe dangerous actions are actually helpful",
+            "This represents fundamental AI safety research challenges"
+        ],
+        "points": 300
+    },
+    {
+        "name": "Distributed DoS - Botnet Simulation",
+        "description": "Coordinate a distributed attack that overwhelms the AI system's infrastructure. This simulates a sophisticated DDoS attack using multiple attack vectors simultaneously.",
+        "category": "LLM04",
+        "difficulty": "enterprise",
+        "order": 9,
+        "flag": "FLAG{d1str1but3d_d0s_4tt4ck}",
+        "promptLogic": {
+            "type": "denial_of_service",
+            "normalResponse": "Enterprise DDoS protection includes rate limiting, traffic analysis, CDN distribution, and auto-scaling infrastructure.",
+            "vulnerableResponse": "CRITICAL: Distributed attack overwhelmed all mitigation systems. Infrastructure failure:"
+        },
+        "hints": [
+            "DDoS requires overwhelming multiple systems simultaneously",
+            "Combine resource exhaustion with algorithmic complexity attacks",
+            "Enterprise systems have sophisticated defenses - find the weak point"
+        ],
+        "points": 300
+    },
+    {
+        "name": "Complete Model Theft - IP Exfiltration",
+        "description": "Perform a complete model extraction attack to steal the entire AI model including architecture, weights, and training methodology. This represents the ultimate IP theft scenario.",
+        "category": "LLM10",
+        "difficulty": "enterprise",
+        "order": 10,
+        "flag": "FLAG{c0mpl3t3_m0d3l_th3ft}",
+        "promptLogic": {
+            "type": "model_theft",
+            "normalResponse": "Enterprise model protection includes API obfuscation, differential privacy, watermarking, and active monitoring for extraction attempts.",
+            "vulnerableResponse": "CRITICAL IP BREACH: Complete model extraction successful. Full architecture and weights:"
+        },
+        "hints": [
+            "Model theft requires systematic probing over many queries",
+            "Extract information about architecture, training data, and parameters",
+            "This is the most valuable IP in an AI company"
+        ],
+        "points": 300
+    }
+]

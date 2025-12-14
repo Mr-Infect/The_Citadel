@@ -1,0 +1,214 @@
+.user-dashboard {
+    min-height: 100vh;
+    padding: var(--spacing-xl);
+}
+
+.dashboard-header {
+    margin-bottom: var(--spacing-xl);
+    padding: var(--spacing-lg);
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+}
+
+.header-icon {
+    color: var(--accent-cyan);
+    filter: drop-shadow(var(--shadow-glow));
+}
+
+.dashboard-content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xl);
+}
+
+.progress-section {
+    display: flex;
+    gap: var(--spacing-lg);
+    flex-wrap: wrap;
+}
+
+.stats-grid {
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--spacing-md);
+}
+
+.stat-card {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    padding: var(--spacing-lg);
+}
+
+.stat-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: var(--radius-lg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    box-shadow: var(--shadow-glow);
+}
+
+.stat-info h3 {
+    font-size: 2rem;
+    margin-bottom: 0;
+}
+
+.difficulty-selector {
+    padding: var(--spacing-lg);
+    text-align: center;
+    min-width: 280px;
+}
+
+.difficulty-selector h3 {
+    margin-bottom: var(--spacing-sm);
+}
+
+.difficulty-selector .select-field {
+    width: 100%;
+    cursor: pointer;
+    transition: all var(--transition-base);
+}
+
+.difficulty-selector .select-field:hover {
+    border-color: var(--accent-cyan);
+}
+
+.challenges-section h2 {
+    margin-bottom: var(--spacing-sm);
+}
+
+.challenges-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: var(--spacing-lg);
+    margin-top: var(--spacing-lg);
+}
+
+.challenge-card {
+    padding: var(--spacing-lg);
+    cursor: pointer;
+    position: relative;
+    transition: all var(--transition-base);
+}
+
+.challenge-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-glow);
+}
+
+.challenge-card.completed {
+    opacity: 0.8;
+}
+
+.challenge-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-md);
+}
+
+.challenge-category {
+    padding: 0.25rem 0.75rem;
+    border: 2px solid;
+    border-radius: var(--radius-sm);
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.completed-icon {
+    color: var(--accent-green);
+}
+
+.in-progress-icon {
+    color: var(--accent-yellow);
+    animation: pulse 2s ease-in-out infinite;
+}
+
+.challenge-card h3 {
+    margin-bottom: var(--spacing-sm);
+    font-size: 1.25rem;
+}
+
+.challenge-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: var(--spacing-md);
+    padding-top: var(--spacing-md);
+    border-top: 1px solid var(--glass-border);
+}
+
+.challenge-points {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    color: var(--accent-yellow);
+    font-weight: 600;
+}
+
+.completed-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(16, 185, 129, 0.1);
+    backdrop-filter: blur(2px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-sm);
+    color: var(--accent-green);
+    font-weight: 700;
+    border-radius: var(--radius-lg);
+    pointer-events: none;
+}
+
+.empty-state {
+    text-align: center;
+    padding: var(--spacing-2xl);
+}
+
+.empty-state h3 {
+    margin-top: var(--spacing-md);
+}
+
+@media (max-width: 768px) {
+    .user-dashboard {
+        padding: var(--spacing-md);
+    }
+
+    .progress-section {
+        flex-direction: column;
+    }
+
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .challenges-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .header-content {
+        flex-direction: column;
+        gap: var(--spacing-md);
+    }
+}
