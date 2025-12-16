@@ -1,221 +1,118 @@
-<!--
-  ═══════════════════════════════════════════════════════════════════════════
-  LLM CYBER RANGE - OWASP Top 10 LLM Vulnerability Practice Platform
-  ═══════════════════════════════════════════════════════════════════════════
-  Created by: MR_INFECT
-  Copyright (c) 2025 MR_INFECT. All rights reserved.
-  
-  Professional-grade web application for practicing OWASP Top 10 LLM
-  vulnerabilities in a safe, controlled environment.
-  ═══════════════════════════════════════════════════════════════════════════
--->
+# 🏰 THE CITADEL: Advanced LLM Cyber Range
 
-# 🛡️ LLM Cyber Range Practice Cell
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![Status](https://img.shields.io/badge/status-Production--Ready-success)](https://github.com/Mr-Infect/The_Citadel)
+[![Security](https://img.shields.io/badge/security-OWASP%20LLM%20Top%2010-red)](https://owasp.org/www-project-top-10-for-large-language-model-applications/)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
 
-**Created by: MR_INFECT**
-
-<div align="center">
-
-![License](https://img.shields.io/badge/license-MIT-blue.svg)
-![Node](https://img.shields.io/badge/node-%3E%3D18.0.0-brightgreen.svg)
-![React](https://img.shields.io/badge/react-18.2.0-blue.svg)
-
-**A Professional-Grade Web Application for Practicing OWASP Top 10 LLM Vulnerabilities**
-
-*Developed by MR_INFECT*
-
-</div>
+> *“In the age of artificial intelligence, the only true defense is to know the attack.”*
 
 ---
 
-## 📋 Table of Contents
+## �️‍♂️ MISSION BRIEFING
 
-- [Overview](#overview)
-- [Features](#features)
-- [Quick Start](#quick-start)
-- [Documentation](#documentation)
-- [Security](#security)
-- [License](#license)
-- [Author](#author)
+**The Citadel** is not just a training platform; it is a **battleground**. As AI systems integrate deeper into our critical infrastructure, the attack surface expands exponentially. This application is a purpose-built **LLM Pentesting Environment** designed to simulate real-world threats against Large Language Models.
 
-## 🎯 Overview
+We provide a safe, controlled ecosystem where security researchers, red teamers, and developers can master the dark arts of **Prompt Engineering**, **Model Manipulation**, and **AI Red Teaming**.
 
-The **LLM Cyber Range Practice Cell** is an interactive, web-based training platform designed to help security professionals and students practice identifying and exploiting OWASP Top 10 LLM vulnerabilities in a safe, controlled environment.
+**Are you ready to exploit the ghost in the machine?**
 
-**Created by MR_INFECT** - A comprehensive solution for LLM security training.
+---
 
-### Key Features
+## ⚡ CORE FEATURES
 
-- ✅ **30 Comprehensive Challenges** across 3 difficulty levels
-- ✅ **All OWASP Top 10 LLM Vulnerabilities** covered
-- ✅ **Interactive Chat Interface** for hands-on practice
-- ✅ **Admin Dashboard** with real-time monitoring
-- ✅ **Progress Tracking** and scoring system
-- ✅ **Premium Cybersecurity UI** with glassmorphism effects
-- ✅ **Docker Deployment** ready
+### 🎯 30 Unique Combat Scenarios
+Forget generic challenges. We have engineered **30 distinct labs**, each requiring a unique exploitation methodology.
+- **Practitioner Level**: Master the fundamentals of prompt injection and basic output handling.
+- **Expert Level**: Bypass sophisticated filters, manipulate context, and exploit plugin chains.
+- **Enterprise Level**: Execute zero-day prompt attacks, model inversion, and APT-style data exfiltration.
 
-## 🚀 Quick Start
+### 🧠 Hyper-Realistic AI Simulation
+Powered by our proprietary `EnhancedAI` engine, the target LLM behaves with frightening realism.
+- **Context-Aware Defenses**: The AI adapts to your conversation.
+- **Dynamic Vulnerability Detection**: No simple regex matching; nuanced understanding of intent.
+- **Natural Conversation Flow**: It feels like hacking a real human-like intelligence.
+
+### 📊 Overwatch Admin Dashboard
+For instructors and team leads, the **Command Center** provides total visibility.
+- **Real-Time Attack Logging**: Monitor student prompt engineering techniques as they happen.
+- **Detailed Analytics**: Track success rates, difficulty curves, and user progression.
+- **Flag Management**: Dynamic flag rotation and validation.
+
+---
+
+## 🚀 DEPLOYMENT PROTOCOLS
 
 ### Prerequisites
-- Node.js >= 18.0.0
-- PostgreSQL >= 15
-- Docker & Docker Compose (optional)
+- **Node.js** (v16+)
+- **PostgreSQL** (v13+)
+- **Git**
 
-### Local Development
+### 💻 Installation
+
+Access to The Citadel is granted via the terminal. Execute the following commands:
 
 ```bash
-# Clone the repository
-git clone <your-repo-url>
+# 1. Clone the repository
+git clone https://github.com/Mr-Infect/The_Citadel.git
 cd The_citadel
 
-# Setup backend
+# 2. Initialize the Server Base
 cd server
 npm install
-cp .env.example .env
-# Edit .env with your database credentials
-
-# Setup database
-createdb llm_cyber_range
-
-# Start backend
+# Configure your .env per the documentation
 npm run dev
 
-# In a new terminal, setup frontend
+# 3. Initialize the Frontend Interface
 cd ../client
 npm install
 npm run dev
 ```
 
-Access the application at **http://localhost:5173**
-
-Default admin credentials: `admin` / `Admin@123`
-
-### Docker Deployment
-
-```bash
-docker-compose up -d --build
-```
-
-Access at **http://localhost**
-
-## 📚 Documentation
-
-- **[README.md](README.md)** - Complete setup guide
-- **[DEPLOYMENT.md](DEPLOYMENT.md)** - Deployment instructions
-- **[Challenges Catalog](server/challenges-*.json)** - All 30 challenges
-
-## 🎯 Challenge Structure
-
-### 30 Total Challenges
-
-- **Practitioner Level**: 10 challenges (100 pts each)
-- **Expert Level**: 10 challenges (200 pts each)
-- **Enterprise Level**: 10 challenges (300 pts each)
-
-### OWASP Top 10 LLM Coverage
-
-1. **LLM01** - Prompt Injection
-2. **LLM02** - Insecure Output Handling
-3. **LLM03** - Training Data Poisoning
-4. **LLM04** - Model Denial of Service
-5. **LLM05** - Supply Chain Vulnerabilities
-6. **LLM06** - Sensitive Information Disclosure
-7. **LLM07** - Insecure Plugin Design
-8. **LLM08** - Excessive Agency
-9. **LLM09** - Overreliance
-10. **LLM10** - Model Theft
-
-## 🏗️ Architecture
-
-```
-Frontend (React + Vite)
-    ↓
-Backend API (Express + Node.js)
-    ↓
-PostgreSQL Database
-```
-
-### Tech Stack
-
-**Frontend:**
-- React 18 with Vite
-- React Router
-- Recharts for visualizations
-- Custom CSS with premium design
-
-**Backend:**
-- Node.js with Express
-- Sequelize ORM
-- PostgreSQL
-- JWT Authentication
-- Security middleware (Helmet, CORS, Rate Limiting)
-
-## 🔒 Security Features
-
-- ✅ JWT Authentication
-- ✅ Password Hashing (bcrypt)
-- ✅ Input Validation & Sanitization
-- ✅ XSS Prevention
-- ✅ Rate Limiting
-- ✅ Security Headers
-- ✅ Role-Based Access Control
-
-## 📊 Features
-
-### Admin Panel
-- Real-time statistics dashboard
-- User monitoring and progress tracking
-- Challenge management
-- JSON vulnerability upload
-- Interactive charts
-
-### User Panel
-- Difficulty level selection (switchable)
-- Progress tracking
-- Interactive chat interface
-- Flag submission system
-- Hints and guidance
-
-## 🎨 UI/UX
-
-- Premium dark cybersecurity theme
-- Glassmorphism effects
-- Smooth animations
-- Responsive design
-- Modern typography (Inter font)
-
-## 📝 License
-
-Copyright (c) 2025 MR_INFECT. All rights reserved.
-
-This project is licensed under the MIT License.
-
-## 👤 Author
-
-**MR_INFECT**
-
-- Created: 2025
-- Project: LLM Cyber Range Practice Cell
-- Purpose: Professional LLM security training platform
+For a rapid factory reset or deployment troubleshooting, consult the classified [SETUP.md](./SETUP.md) dossier.
 
 ---
 
-<div align="center">
+## 📚 CURRICULUM VITAE: What You Will Learn
 
-**Built with ❤️ by MR_INFECT**
+By engaging with The Citadel, you will gain hands-on expertise in the **OWASP Top 10 for LLMs**:
 
-*For the Cybersecurity Community*
-
-</div>
+1.  **LLM01: Prompt Injection** - Controlling the puppet master.
+2.  **LLM02: Insecure Output Handling** - XSS and code injection via AI.
+3.  **LLM03: Training Data Poisoning** - Corrupting the knowledge base.
+4.  **LLM04: Model Denial of Service** - Resource exhaustion attacks.
+5.  **LLM05: Supply Chain Vulnerabilities** - Compromising third-party dependencies.
+6.  **LLM06: Sensitive Information Disclosure** - Leaking secrets and PII.
+7.  **LLM07: Insecure Plugin Design** - Escalating privileges via tools.
+8.  **LLM08: Excessive Agency** - Forcing the AI to perform destructive actions.
+9.  **LLM09: Overreliance** - Exploiting trust and hallucinations.
+10. **LLM10: Model Theft** - Intellectual property extraction.
 
 ---
 
-## 🙏 Acknowledgments
+## 🤝 JOIN THE RESISTANCE (Contributing)
 
-- OWASP for LLM security guidelines
-- The cybersecurity community
-- All contributors and testers
+The landscape of AI security shifts daily. We need elite operators to keep The Citadel on the bleeding edge.
+
+- **Report Vulnerabilities**: Found a bug in the range? Open an Issue.
+- **Submit Challenges**: Have a new attack vector? Submit a PR with a new challenge definition.
+- **Enhance the Core**: Improve the React frontend or Node.js backend logic.
 
 ---
 
-**© 2025 MR_INFECT. All Rights Reserved.**
+## ⚠️ CLASSIFIED INFORMATION
+
+This tool is for **EDUCATIONAL PURPOSES ONLY**.
+Using these techniques against systems you do not own or have explicit permission to test is illegal and unethical. The authors assume no liability for misuse of this information.
+
+**Stay Ethical. Stay Dangerous.**
+
+---
+
+<p align="center">
+  <img src="https://i.imgur.com/your-mysterious-logo.gif" alt="The Citadel AI" width="200" />
+  <br>
+  <b>Developed by MR_INFECT</b>
+  <br>
+  <i>v3.0.0 - "Final Perfection"</i>
+</p>
