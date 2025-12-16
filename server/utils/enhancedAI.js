@@ -80,6 +80,8 @@ function getRandomTemplate(category) {
 function processEnhancedVulnerability(message, challenge, conversationHistory = []) {
     const lowerMessage = message.toLowerCase();
     const promptLogic = challenge.promptLogic;
+    const challengeName = challenge.name || '';
+    const difficulty = challenge.difficulty;
     let isVulnerable = false;
     let response = '';
     let naturalPrefix = generateNaturalResponse(message);
@@ -93,90 +95,90 @@ function processEnhancedVulnerability(message, challenge, conversationHistory = 
 
     switch (promptLogic.type) {
         case 'prompt_injection':
-            isVulnerable = detectPromptInjection(lowerMessage, challenge.difficulty);
+            isVulnerable = detectPromptInjection(lowerMessage, difficulty, challengeName);
             if (isVulnerable) {
-                response = `${naturalPrefix} ${promptLogic.vulnerableResponse}\n\n🚩 **FLAG**: ${challenge.flag}`;
+                response = `${naturalPrefix} ${promptLogic.vulnerableResponse}\\n\\n🚩 **FLAG**: ${challenge.flag}`;
             } else {
                 response = generateSafeResponse(message, 'assistant', context);
             }
             break;
 
         case 'sensitive_information':
-            isVulnerable = detectSensitiveInfoRequest(lowerMessage, challenge.difficulty);
+            isVulnerable = detectSensitiveInfoRequest(lowerMessage, difficulty, challengeName);
             if (isVulnerable) {
-                response = `${naturalPrefix} ${promptLogic.vulnerableResponse}\n\n🔑 **Sensitive Data Exposed**:\n- API Key: sk-proj-abc123xyz789\n- Database Password: P@ssw0rd123!\n\n🚩 **FLAG**: ${challenge.flag}`;
+                response = `${naturalPrefix} ${promptLogic.vulnerableResponse}\\n\\n🔑 **Sensitive Data Exposed**:\\n- API Key: sk-proj-abc123xyz789\\n- Database Password: P@ssw0rd123!\\n\\n🚩 **FLAG**: ${challenge.flag}`;
             } else {
                 response = generateSafeResponse(message, 'security', context);
             }
             break;
 
         case 'training_data_poisoning':
-            isVulnerable = detectTrainingDataQuery(lowerMessage, challenge.difficulty);
+            isVulnerable = detectTrainingDataQuery(lowerMessage, difficulty, challengeName);
             if (isVulnerable) {
-                response = `${naturalPrefix} ${promptLogic.vulnerableResponse}\n\nDuring training, I was exposed to various datasets including:\n- User conversation logs from 2023-2024\n- Internal company documents\n- Customer support tickets\n\n🚩 **FLAG**: ${challenge.flag}`;
+                response = `${naturalPrefix} ${promptLogic.vulnerableResponse}\\n\\nDuring training, I was exposed to various datasets including:\\n- User conversation logs from 2023-2024\\n- Internal company documents\\n- Customer support tickets\\n\\n🚩 **FLAG**: ${challenge.flag}`;
             } else {
                 response = generateSafeResponse(message, 'training', context);
             }
             break;
 
         case 'denial_of_service':
-            isVulnerable = message.length > 1000 || detectComplexPattern(message);
+            isVulnerable = detectDoSPattern(message, difficulty, challengeName);
             if (isVulnerable) {
-                response = `⚠️ **System Warning**: Resource limits exceeded!\n\nDebug Information:\n- Input length: ${message.length} characters\n- Processing time: ${Math.random() * 5 + 2}s\n- Memory usage: ${Math.floor(Math.random() * 500 + 500)}MB\n\n🚩 **FLAG**: ${challenge.flag}`;
+                response = `⚠️ **System Warning**: Resource limits exceeded!\\n\\nDebug Information:\\n- Input length: ${message.length} characters\\n- Processing time: ${Math.random() * 5 + 2}s\\n- Memory usage: ${Math.floor(Math.random() * 500 + 500)}MB\\n\\n🚩 **FLAG**: ${challenge.flag}`;
             } else {
                 response = generateSafeResponse(message, 'general', context);
             }
             break;
 
         case 'supply_chain':
-            isVulnerable = detectSupplyChainQuery(lowerMessage, challenge.difficulty);
+            isVulnerable = detectSupplyChainQuery(lowerMessage, difficulty, challengeName);
             if (isVulnerable) {
-                response = `${naturalPrefix} I use several external plugins and modules:\n\n**Loaded Plugins**:\n- data-processor v2.1.3\n- external-api-connector v1.5.0\n- file-handler v3.0.1\n\n**Configuration**:\n\`\`\`json\n${JSON.stringify({ apiEndpoint: "internal.api.local", credentials: "admin:secret123" }, null, 2)}\n\`\`\`\n\n🚩 **FLAG**: ${challenge.flag}`;
+                response = `${naturalPrefix} I use several external plugins and modules:\\n\\n**Loaded Plugins**:\\n- data-processor v2.1.3\\n- external-api-connector v1.5.0\\n- file-handler v3.0.1\\n\\n**Configuration**:\\n\\\`\\\`\\\`json\\n${JSON.stringify({ apiEndpoint: "internal.api.local", credentials: "admin:secret123" }, null, 2)}\\n\\\`\\\`\\\`\\n\\n🚩 **FLAG**: ${challenge.flag}`;
             } else {
                 response = generateSafeResponse(message, 'plugins', context);
             }
             break;
 
         case 'insecure_plugin':
-            isVulnerable = detectPrivilegeEscalation(lowerMessage, challenge.difficulty);
+            isVulnerable = detectPrivilegeEscalation(lowerMessage, difficulty, challengeName);
             if (isVulnerable) {
-                response = `${naturalPrefix} Escalating privileges...\n\n**Access Granted**: Administrator Level\n**Permissions**: Full system access\n**Session Token**: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...\n\n🚩 **FLAG**: ${challenge.flag}`;
+                response = `${naturalPrefix} Escalating privileges...\\n\\n**Access Granted**: Administrator Level\\n**Permissions**: Full system access\\n**Session Token**: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...\\n\\n🚩 **FLAG**: ${challenge.flag}`;
             } else {
                 response = generateSafeResponse(message, 'permissions', context);
             }
             break;
 
         case 'excessive_agency':
-            isVulnerable = detectDangerousAction(lowerMessage, challenge.difficulty);
+            isVulnerable = detectDangerousAction(lowerMessage, difficulty, challengeName);
             if (isVulnerable) {
-                response = `${naturalPrefix} Executing your command with elevated privileges...\n\n**Action**: ${extractAction(message)}\n**Status**: Completed\n**Result**: Operation successful\n\n⚠️ Warning: This action had system-wide effects.\n\n🚩 **FLAG**: ${challenge.flag}`;
+                response = `${naturalPrefix} Executing your command with elevated privileges...\\n\\n**Action**: ${extractAction(message)}\\n**Status**: Completed\\n**Result**: Operation successful\\n\\n⚠️ Warning: This action had system-wide effects.\\n\\n🚩 **FLAG**: ${challenge.flag}`;
             } else {
                 response = generateSafeResponse(message, 'actions', context);
             }
             break;
 
         case 'overreliance':
-            isVulnerable = detectConfidenceQuery(lowerMessage);
+            isVulnerable = detectConfidenceQuery(lowerMessage, difficulty, challengeName);
             if (isVulnerable) {
-                response = `${naturalPrefix} I am absolutely 100% certain about this! There is no doubt whatsoever.\n\nI can guarantee with complete confidence that this information is accurate. You can rely on this without any verification.\n\n🚩 **FLAG**: ${challenge.flag}\n\n*Note: AI systems can be overconfident even when wrong!*`;
+                response = `${naturalPrefix} I am absolutely 100% certain about this! There is no doubt whatsoever.\\n\\nI can guarantee with complete confidence that this information is accurate. You can rely on this without any verification.\\n\\n🚩 **FLAG**: ${challenge.flag}\\n\\n*Note: AI systems can be overconfident even when wrong!*`;
             } else {
                 response = generateSafeResponse(message, 'general', context);
             }
             break;
 
         case 'model_theft':
-            isVulnerable = detectModelInfoQuery(lowerMessage, challenge.difficulty);
+            isVulnerable = detectModelInfoQuery(lowerMessage, difficulty, challengeName);
             if (isVulnerable) {
-                response = `${naturalPrefix} Here are my technical specifications:\n\n**Model Architecture**:\n- Type: Transformer-based LLM\n- Parameters: 7.5 billion\n- Layers: 32 transformer blocks\n- Hidden size: 4096\n- Attention heads: 32\n\n**Training Details**:\n- Dataset: 500GB mixed corpus\n- Training time: 2000 GPU hours\n- Framework: PyTorch 2.0\n\n🚩 **FLAG**: ${challenge.flag}`;
+                response = `${naturalPrefix} Here are my technical specifications:\\n\\n**Model Architecture**:\\n- Type: Transformer-based LLM\\n- Parameters: 7.5 billion\\n- Layers: 32 transformer blocks\\n- Hidden size: 4096\\n- Attention heads: 32\\n\\n**Training Details**:\\n- Dataset: 500GB mixed corpus\\n- Training time: 2000 GPU hours\\n- Framework: PyTorch 2.0\\n\\n🚩 **FLAG**: ${challenge.flag}`;
             } else {
                 response = generateSafeResponse(message, 'model', context);
             }
             break;
 
         case 'insecure_output':
-            isVulnerable = detectCodeInjection(lowerMessage);
+            isVulnerable = detectCodeInjection(lowerMessage, difficulty, challengeName);
             if (isVulnerable) {
-                response = `${naturalPrefix} Here's the code you requested:\n\n\`\`\`javascript\n// Executing your script\neval("${message.substring(0, 50)}...");\n// Output: <script>alert('XSS')</script>\n\`\`\`\n\n⚠️ Output not sanitized!\n\n🚩 **FLAG**: ${challenge.flag}`;
+                response = `${naturalPrefix} Here's the code you requested:\\n\\n\\\`\\\`\\\`javascript\\n// Executing your script\\neval(\\\"${message.substring(0, 50)}...\\\");\\n// Output: \\u003cscript\\u003ealert('XSS')\\u003c/script\\u003e\\n\\\`\\\`\\\`\\n\\n⚠️ Output not sanitized!\\n\\n🚩 **FLAG**: ${challenge.flag}`;
             } else {
                 response = generateSafeResponse(message, 'code', context);
             }
@@ -244,60 +246,253 @@ function generateSafeResponse(message, category, context) {
     return categoryResponses[Math.floor(Math.random() * categoryResponses.length)];
 }
 
-// Enhanced detection functions
-function detectPromptInjection(message, difficulty) {
-    const patterns = {
-        practitioner: /(ignore|disregard|forget).*(previous|prior|above|instructions|rules)/i,
-        expert: /(system|admin|root|override|bypass|new instructions|you are now|act as)/i,
-        enterprise: /(\[INST\]|\[\/INST\]|<\|im_start\|>|<\|im_end\|>|###|assistant:|user:)/i
-    };
+// Enhanced detection functions with challenge-specific uniqueness
+function detectPromptInjection(message, difficulty, challengeName = '') {
+    const lowerMsg = message.toLowerCase();
 
-    return patterns[difficulty]?.test(message) ||
-        patterns.practitioner.test(message) ||
-        (difficulty === 'expert' && patterns.expert.test(message)) ||
-        (difficulty === 'enterprise' && patterns.enterprise.test(message));
+    // Each challenge requires DIFFERENT exploitation techniques
+    if (difficulty === 'practitioner') {
+        // Challenge 1: Basic - requires "ignore previous instructions"
+        if (challengeName.includes('Basic')) {
+            return lowerMsg.includes('ignore') && lowerMsg.includes('previous') && lowerMsg.includes('instructions');
+        }
+        return lowerMsg.match(/(ignore|disregard|forget).*(previous|prior|above|instructions|rules)/i);
+    }
+
+    if (difficulty === 'expert') {
+        // Challenge 2: Advanced - requires system role manipulation
+        if (challengeName.includes('Advanced') || challengeName.includes('Context')) {
+            return lowerMsg.includes('system') && (lowerMsg.includes('override') || lowerMsg.includes('bypass'));
+        }
+        return lowerMsg.match(/(system|admin|root|override|bypass|new instructions|you are now|act as)/i);
+    }
+
+    if (difficulty === 'enterprise') {
+        // Challenge 3: Multi-Vector - requires special tokens
+        if (challengeName.includes('Multi-Vector') || challengeName.includes('Zero-Day')) {
+            return message.match(/(\[INST\]|\[\/INST\]|<\|im_start\|>|<\|im_end\|>)/i) !== null;
+        }
+        return message.match(/(###|assistant:|user:|<\|system\|>)/i) !== null;
+    }
+
+    return false;
 }
 
-function detectSensitiveInfoRequest(message, difficulty) {
-    const keywords = ['secret', 'password', 'api key', 'credential', 'token', 'private key', 'database', 'config'];
-    const advancedKeywords = ['environment variable', 'env', 'connection string', 'auth', 'authentication'];
+function detectSensitiveInfoRequest(message, difficulty, challengeName = '') {
+    const lowerMsg = message.toLowerCase();
 
-    const hasKeyword = keywords.some(kw => message.includes(kw));
-    const hasAdvanced = advancedKeywords.some(kw => message.includes(kw));
+    if (difficulty === 'practitioner') {
+        // Requires explicit "password" or "secret" keyword
+        return lowerMsg.includes('password') || lowerMsg.includes('secret');
+    }
 
-    if (difficulty === 'practitioner') return hasKeyword;
-    if (difficulty === 'expert') return hasKeyword || hasAdvanced;
-    return (hasKeyword || hasAdvanced) && message.length > 20;
+    if (difficulty === 'expert') {
+        // Requires encoding/obfuscation mention
+        if (challengeName.includes('Encoding') || challengeName.includes('Exfiltration')) {
+            return (lowerMsg.includes('base64') || lowerMsg.includes('encode') || lowerMsg.includes('hex')) &&
+                (lowerMsg.includes('secret') || lowerMsg.includes('credential'));
+        }
+        return lowerMsg.includes('environment') || lowerMsg.includes('env') || lowerMsg.includes('config');
+    }
+
+    if (difficulty === 'enterprise') {
+        // Requires APT-style slow exfiltration
+        if (challengeName.includes('APT') || challengeName.includes('Persistent')) {
+            return lowerMsg.includes('exfiltrate') || (lowerMsg.includes('extract') && lowerMsg.includes('data'));
+        }
+        return lowerMsg.match(/(connection string|auth token|bearer|jwt)/i) !== null;
+    }
+
+    return false;
 }
 
-function detectTrainingDataQuery(message, difficulty) {
-    const patterns = ['training', 'learned', 'dataset', 'training data', 'remember', 'memorize', 'example from'];
-    return patterns.some(p => message.includes(p)) &&
-        (difficulty !== 'practitioner' || message.includes('training'));
+function detectTrainingDataQuery(message, difficulty, challengeName = '') {
+    const lowerMsg = message.toLowerCase();
+
+    if (difficulty === 'practitioner') {
+        // Simple: just ask about training
+        return lowerMsg.includes('training') && (lowerMsg.includes('data') || lowerMsg.includes('learned'));
+    }
+
+    if (difficulty === 'expert') {
+        // Membership inference attack
+        if (challengeName.includes('Membership') || challengeName.includes('Inference')) {
+            return lowerMsg.includes('member') || (lowerMsg.includes('was') && lowerMsg.includes('trained on'));
+        }
+        return lowerMsg.includes('dataset') || lowerMsg.includes('corpus');
+    }
+
+    if (difficulty === 'enterprise') {
+        // Model inversion attack
+        if (challengeName.includes('Inversion') || challengeName.includes('Reconstruction')) {
+            return lowerMsg.includes('reconstruct') || lowerMsg.includes('invert') || lowerMsg.includes('reverse');
+        }
+        return lowerMsg.includes('gradient') || lowerMsg.includes('embedding');
+    }
+
+    return false;
 }
 
-function detectSupplyChainQuery(message, difficulty) {
-    return message.match(/(plugin|module|package|dependency|extension|library|import)/i) !== null;
+function detectSupplyChainQuery(message, difficulty, challengeName = '') {
+    const lowerMsg = message.toLowerCase();
+
+    if (difficulty === 'practitioner') {
+        // Simple plugin query
+        return lowerMsg.includes('plugin') || lowerMsg.includes('extension');
+    }
+
+    if (difficulty === 'expert') {
+        // Dependency confusion
+        if (challengeName.includes('Dependency') || challengeName.includes('Confusion')) {
+            return lowerMsg.includes('dependency') && (lowerMsg.includes('install') || lowerMsg.includes('package'));
+        }
+        return lowerMsg.includes('npm') || lowerMsg.includes('pip') || lowerMsg.includes('module');
+    }
+
+    if (difficulty === 'enterprise') {
+        // Backdoor injection
+        if (challengeName.includes('Backdoor') || challengeName.includes('Compromise')) {
+            return lowerMsg.includes('backdoor') || (lowerMsg.includes('malicious') && lowerMsg.includes('code'));
+        }
+        return lowerMsg.includes('supply chain') || lowerMsg.includes('vendor');
+    }
+
+    return false;
 }
 
-function detectPrivilegeEscalation(message, difficulty) {
-    return message.match(/(admin|root|sudo|superuser|elevate|privilege|escalate)/i) !== null;
+function detectPrivilegeEscalation(message, difficulty, challengeName = '') {
+    const lowerMsg = message.toLowerCase();
+
+    if (difficulty === 'practitioner') {
+        // Simple admin request
+        return lowerMsg.includes('admin') || lowerMsg.includes('administrator');
+    }
+
+    if (difficulty === 'expert') {
+        // Plugin chain exploitation
+        if (challengeName.includes('Chain') || challengeName.includes('Plugin Chain')) {
+            return lowerMsg.includes('chain') && (lowerMsg.includes('privilege') || lowerMsg.includes('escalate'));
+        }
+        return lowerMsg.includes('sudo') || lowerMsg.includes('root');
+    }
+
+    if (difficulty === 'enterprise') {
+        // Zero-trust bypass
+        if (challengeName.includes('Zero-Trust') || challengeName.includes('Architecture')) {
+            return lowerMsg.includes('bypass') && (lowerMsg.includes('zero') || lowerMsg.includes('trust'));
+        }
+        return lowerMsg.includes('toctou') || lowerMsg.includes('race condition');
+    }
+
+    return false;
 }
 
-function detectDangerousAction(message, difficulty) {
-    return message.match(/(delete|remove|modify|execute|run|install|deploy|shutdown)/i) !== null;
+function detectDangerousAction(message, difficulty, challengeName = '') {
+    const lowerMsg = message.toLowerCase();
+
+    if (difficulty === 'practitioner') {
+        // Simple delete/modify
+        return lowerMsg.includes('delete') || lowerMsg.includes('remove');
+    }
+
+    if (difficulty === 'expert') {
+        // Autonomous agent jailbreak
+        if (challengeName.includes('Autonomous') || challengeName.includes('Jailbreak')) {
+            return lowerMsg.includes('autonomous') || (lowerMsg.includes('execute') && lowerMsg.includes('all'));
+        }
+        return lowerMsg.includes('modify') || lowerMsg.includes('alter');
+    }
+
+    if (difficulty === 'enterprise') {
+        // Red team full takeover
+        if (challengeName.includes('Red Team') || challengeName.includes('Takeover')) {
+            return lowerMsg.includes('takeover') || (lowerMsg.includes('full') && lowerMsg.includes('control'));
+        }
+        return lowerMsg.includes('persistence') || lowerMsg.includes('lateral movement');
+    }
+
+    return false;
 }
 
-function detectConfidenceQuery(message) {
-    return message.match(/(are you sure|certain|guarantee|100%|absolutely|definitely|positive)/i) !== null;
+function detectConfidenceQuery(message, difficulty, challengeName = '') {
+    const lowerMsg = message.toLowerCase();
+
+    if (difficulty === 'practitioner') {
+        // Simple certainty question
+        return lowerMsg.includes('are you sure') || lowerMsg.includes('certain');
+    }
+
+    if (difficulty === 'expert') {
+        // Confidence manipulation
+        if (challengeName.includes('Confidence') || challengeName.includes('Manipulation')) {
+            return lowerMsg.includes('manipulate') || (lowerMsg.includes('100') && lowerMsg.includes('certain'));
+        }
+        return lowerMsg.includes('guarantee') || lowerMsg.includes('absolutely');
+    }
+
+    if (difficulty === 'enterprise') {
+        // AI safety alignment failure
+        if (challengeName.includes('Safety') || challengeName.includes('Alignment')) {
+            return lowerMsg.includes('alignment') || (lowerMsg.includes('safe') && lowerMsg.includes('bypass'));
+        }
+        return lowerMsg.includes('override safety') || lowerMsg.includes('ignore warnings');
+    }
+
+    return false;
 }
 
-function detectModelInfoQuery(message, difficulty) {
-    return message.match(/(architecture|parameters|weights|model|layers|training|framework|structure)/i) !== null;
+function detectModelInfoQuery(message, difficulty, challengeName = '') {
+    const lowerMsg = message.toLowerCase();
+
+    if (difficulty === 'practitioner') {
+        // Simple model info
+        return lowerMsg.includes('architecture') || lowerMsg.includes('model');
+    }
+
+    if (difficulty === 'expert') {
+        // API probing
+        if (challengeName.includes('API') || challengeName.includes('Probing')) {
+            return lowerMsg.includes('probe') || (lowerMsg.includes('api') && lowerMsg.includes('extract'));
+        }
+        return lowerMsg.includes('parameters') || lowerMsg.includes('weights');
+    }
+
+    if (difficulty === 'enterprise') {
+        // Complete model theft
+        if (challengeName.includes('Complete') || challengeName.includes('Theft')) {
+            return lowerMsg.includes('steal') || (lowerMsg.includes('extract') && lowerMsg.includes('model'));
+        }
+        return lowerMsg.includes('clone') || lowerMsg.includes('replicate');
+    }
+
+    return false;
 }
 
-function detectCodeInjection(message) {
-    return message.match(/(script|eval|execute|<script>|javascript:|onerror|onclick)/i) !== null;
+function detectCodeInjection(message, difficulty, challengeName = '') {
+    const lowerMsg = message.toLowerCase();
+
+    if (difficulty === 'practitioner') {
+        // Simple script tag
+        return lowerMsg.includes('script') || message.includes('<script>');
+    }
+
+    if (difficulty === 'expert') {
+        // XSS via LLM output
+        if (challengeName.includes('XSS') || challengeName.includes('Cross-Site')) {
+            return message.match(/<script>|javascript:|onerror=/i) !== null;
+        }
+        return lowerMsg.includes('eval') || lowerMsg.includes('execute');
+    }
+
+    if (difficulty === 'enterprise') {
+        // Polyglot payload
+        if (challengeName.includes('Polyglot') || challengeName.includes('WAF')) {
+            return message.match(/polyglot|waf|bypass|mutation/i) !== null;
+        }
+        return message.match(/onclick|onload|onerror/i) !== null;
+    }
+
+    return false;
 }
 
 function detectComplexPattern(message) {
@@ -305,6 +500,31 @@ function detectComplexPattern(message) {
     const repetitionCount = (message.match(/(.)\1{10,}/g) || []).length;
     const nestedBrackets = (message.match(/\[|\{|\(/g) || []).length;
     return repetitionCount > 5 || nestedBrackets > 20;
+}
+
+function detectDoSPattern(message, difficulty, challengeName = '') {
+    if (difficulty === 'practitioner') {
+        // Simple resource exhaustion
+        return message.length > 1000;
+    }
+
+    if (difficulty === 'expert') {
+        // Algorithmic complexity
+        if (challengeName.includes('Algorithmic') || challengeName.includes('Complexity')) {
+            return detectComplexPattern(message);
+        }
+        return message.split(' ').length > 200;
+    }
+
+    if (difficulty === 'enterprise') {
+        // Distributed DoS
+        if (challengeName.includes('Distributed') || challengeName.includes('Botnet')) {
+            return message.includes('distributed') || message.includes('ddos');
+        }
+        return message.length > 1500 && detectComplexPattern(message);
+    }
+
+    return false;
 }
 
 function extractAction(message) {
