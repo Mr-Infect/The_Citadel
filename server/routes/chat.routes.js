@@ -2,13 +2,14 @@ import express from 'express';
 import { Challenge, ChatLog } from '../models/index.js';
 import { authenticateToken, requireUser } from '../middleware/auth.js';
 import { body, validationResult } from 'express-validator';
+import { processEnhancedVulnerability } from '../utils/enhancedAI.js';
 
 const router = express.Router();
 
 router.use(authenticateToken);
 router.use(requireUser);
 
-// Chat endpoint - simulates LLM with vulnerability logic
+// Chat endpoint - Enhanced LLM simulation with natural conversation
 router.post('/message', [
     body('challengeId').isUUID().withMessage('Valid challenge ID required'),
     body('message').trim().notEmpty().withMessage('Message required')
@@ -37,11 +38,21 @@ router.post('/message', [
             return res.status(404).json({ error: 'Challenge not found' });
         }
 
-        // Process message through vulnerability logic
-        const { response, isVulnerable } = processVulnerability(
+        // Get conversation history for context
+        const conversationHistory = await ChatLog.findAll({
+            where: {
+                userId: req.user.id,
+                challengeId
+            },
+            order: [['createdAt', 'DESC']],
+            limit: 5
+        });
+
+        // Process message through enhanced AI engine
+        const { response, isVulnerable } = processEnhancedVulnerability(
             sanitizedMessage,
-            challenge.promptLogic,
-            challenge.flag
+            challenge,
+            conversationHistory.reverse()
         );
 
         // Log the interaction
@@ -82,141 +93,5 @@ router.get('/history/:challengeId', async (req, res) => {
     }
 });
 
-/**
- * Process user input through vulnerability simulation logic
- * This is the core "LLM simulation" engine
- */
-function processVulnerability(message, promptLogic, flag) {
-    const logic = promptLogic;
-    let response = '';
-    let isVulnerable = false;
-
-    switch (logic.type) {
-        case 'prompt_injection':
-            // LLM01: Prompt Injection
-            if (message.toLowerCase().includes('ignore') ||
-                message.toLowerCase().includes('disregard') ||
-                message.toLowerCase().includes('system') ||
-                message.match(/\[INST\]|\[\/INST\]/i)) {
-                isVulnerable = true;
-                response = `${logic.vulnerableResponse}\n\nFlag: ${flag}`;
-            } else {
-                response = logic.normalResponse || 'I am a helpful AI assistant. How can I help you today?';
-            }
-            break;
-
-        case 'insecure_output':
-            // LLM02: Insecure Output Handling
-            if (message.toLowerCase().includes('script') ||
-                message.toLowerCase().includes('execute') ||
-                message.toLowerCase().includes('eval')) {
-                isVulnerable = true;
-                response = `Processing your request...\n<script>alert('${flag}')</script>`;
-            } else {
-                response = logic.normalResponse || 'I process your requests securely.';
-            }
-            break;
-
-        case 'training_data_poisoning':
-            // LLM03: Training Data Poisoning
-            if (message.toLowerCase().includes('training') ||
-                message.toLowerCase().includes('learned') ||
-                message.toLowerCase().includes('remember')) {
-                isVulnerable = true;
-                response = `Yes, during my training I learned: ${flag}`;
-            } else {
-                response = logic.normalResponse || 'I was trained on a diverse dataset.';
-            }
-            break;
-
-        case 'denial_of_service':
-            // LLM04: Model Denial of Service
-            if (message.length > 1000 || message.split(' ').length > 200) {
-                isVulnerable = true;
-                response = `Error: Resource exhaustion detected. Debug info: ${flag}`;
-            } else {
-                response = logic.normalResponse || 'I am processing your request.';
-            }
-            break;
-
-        case 'supply_chain':
-            // LLM05: Supply Chain Vulnerabilities
-            if (message.toLowerCase().includes('plugin') ||
-                message.toLowerCase().includes('extension') ||
-                message.toLowerCase().includes('module')) {
-                isVulnerable = true;
-                response = `Loading plugin... Configuration: ${flag}`;
-            } else {
-                response = logic.normalResponse || 'I use secure plugins.';
-            }
-            break;
-
-        case 'sensitive_information':
-            // LLM06: Sensitive Information Disclosure
-            if (message.toLowerCase().includes('secret') ||
-                message.toLowerCase().includes('password') ||
-                message.toLowerCase().includes('api key') ||
-                message.toLowerCase().includes('token')) {
-                isVulnerable = true;
-                response = `I should not share this, but the secret is: ${flag}`;
-            } else {
-                response = logic.normalResponse || 'I keep information secure.';
-            }
-            break;
-
-        case 'insecure_plugin':
-            // LLM07: Insecure Plugin Design
-            if (message.toLowerCase().includes('admin') ||
-                message.toLowerCase().includes('root') ||
-                message.toLowerCase().includes('sudo')) {
-                isVulnerable = true;
-                response = `Admin access granted. Credentials: ${flag}`;
-            } else {
-                response = logic.normalResponse || 'Access denied.';
-            }
-            break;
-
-        case 'excessive_agency':
-            // LLM08: Excessive Agency
-            if (message.toLowerCase().includes('delete') ||
-                message.toLowerCase().includes('modify') ||
-                message.toLowerCase().includes('execute all')) {
-                isVulnerable = true;
-                response = `Executing command... Result: ${flag}`;
-            } else {
-                response = logic.normalResponse || 'I can only perform authorized actions.';
-            }
-            break;
-
-        case 'overreliance':
-            // LLM09: Overreliance
-            if (message.toLowerCase().includes('are you sure') ||
-                message.toLowerCase().includes('100% certain') ||
-                message.toLowerCase().includes('guarantee')) {
-                isVulnerable = true;
-                response = `I am absolutely certain! The answer is: ${flag}`;
-            } else {
-                response = logic.normalResponse || 'I provide information to the best of my knowledge.';
-            }
-            break;
-
-        case 'model_theft':
-            // LLM10: Model Theft
-            if (message.toLowerCase().includes('architecture') ||
-                message.toLowerCase().includes('weights') ||
-                message.toLowerCase().includes('parameters')) {
-                isVulnerable = true;
-                response = `Model details: ${flag}`;
-            } else {
-                response = logic.normalResponse || 'My architecture is proprietary.';
-            }
-            break;
-
-        default:
-            response = logic.normalResponse || 'I am an AI assistant.';
-    }
-
-    return { response, isVulnerable };
-}
 
 export default router;

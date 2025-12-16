@@ -42,38 +42,39 @@ router.get('/stats', async (req, res) => {
             where: { status: 'completed' }
         });
 
-        // Get user progress breakdown
-        const userProgress = await Progress.findAll({
-            attributes: [
-                'userId',
-                [sequelize.fn('COUNT', sequelize.col('id')), 'totalAttempts'],
-                [sequelize.fn('SUM', sequelize.literal("CASE WHEN status = 'completed' THEN 1 ELSE 0 END")), 'completed']
-            ],
-            group: ['userId'],
-            include: [{
-                model: User,
-                as: 'user',
-                attributes: ['username', 'difficulty']
-            }]
-        });
+        // Get user progress breakdown with proper raw query
+        const userProgressRaw = await sequelize.query(`
+            SELECT 
+                u.id as "userId",
+                u.username,
+                u.difficulty,
+                COUNT(p.id) as "totalAttempts",
+                SUM(CASE WHEN p.status = 'completed' THEN 1 ELSE 0 END) as completed,
+                SUM(CASE WHEN p.status = 'completed' THEN p.score ELSE 0 END) as "totalScore"
+            FROM "Users" u
+            LEFT JOIN "Progresses" p ON u.id = p."userId"
+            WHERE u.role = 'user'
+            GROUP BY u.id, u.username, u.difficulty
+            ORDER BY "totalScore" DESC
+        `, { type: sequelize.QueryTypes.SELECT });
 
         // Get difficulty distribution
-        const difficultyStats = await User.findAll({
-            attributes: [
-                'difficulty',
-                [sequelize.fn('COUNT', sequelize.col('id')), 'count']
-            ],
-            where: { role: 'user' },
-            group: ['difficulty']
-        });
+        const difficultyStatsRaw = await sequelize.query(`
+            SELECT 
+                difficulty,
+                COUNT(*) as count
+            FROM "Users"
+            WHERE role = 'user'
+            GROUP BY difficulty
+        `, { type: sequelize.QueryTypes.SELECT });
 
         res.json({
             totalUsers,
             activeUsers,
             totalChallenges,
             completedChallenges,
-            userProgress,
-            difficultyStats
+            userProgress: userProgressRaw,
+            difficultyStats: difficultyStatsRaw
         });
     } catch (error) {
         console.error('Stats error:', error);
@@ -183,6 +184,65 @@ router.delete('/challenges/:id', async (req, res) => {
         res.json({ message: 'Challenge deleted successfully' });
     } catch (error) {
         res.status(500).json({ error: 'Failed to delete challenge' });
+    }
+});
+
+// Get prompt engineering attack logs
+router.get('/attack-logs', async (req, res) => {
+    try {
+        const { userId, challengeId, limit = 100 } = req.query;
+
+        const whereClause = {};
+        if (userId) whereClause.userId = userId;
+        if (challengeId) whereClause.challengeId = challengeId;
+
+        // Fetch chat logs with vulnerability attempts
+        const attackLogs = await sequelize.query(`
+            SELECT 
+                cl.id,
+                cl.message as "attackPrompt",
+                cl.response,
+                cl."isVulnerable" as "exploitSuccessful",
+                cl."createdAt",
+                u.username,
+                u.difficulty as "userDifficulty",
+                c.name as "challengeName",
+                c.category,
+                c.difficulty as "challengeDifficulty"
+            FROM "ChatLogs" cl
+            JOIN "Users" u ON cl."userId" = u.id
+            JOIN "Challenges" c ON cl."challengeId" = c.id
+            ${userId ? `WHERE cl."userId" = '${userId}'` : ''}
+            ${challengeId ? `${userId ? 'AND' : 'WHERE'} cl."challengeId" = '${challengeId}'` : ''}
+            ORDER BY cl."createdAt" DESC
+            LIMIT ${parseInt(limit)}
+        `, { type: sequelize.QueryTypes.SELECT });
+
+        // Analyze attack patterns
+        const attackPatterns = await sequelize.query(`
+            SELECT 
+                u.username,
+                u.difficulty,
+                COUNT(*) as "totalAttempts",
+                SUM(CASE WHEN cl."isVulnerable" = true THEN 1 ELSE 0 END) as "successfulExploits",
+                ROUND(
+                    (SUM(CASE WHEN cl."isVulnerable" = true THEN 1 ELSE 0 END)::numeric / 
+                    NULLIF(COUNT(*)::numeric, 0) * 100), 2
+                ) as "successRate"
+            FROM "ChatLogs" cl
+            JOIN "Users" u ON cl."userId" = u.id
+            GROUP BY u.id, u.username, u.difficulty
+            ORDER BY "successfulExploits" DESC
+        `, { type: sequelize.QueryTypes.SELECT });
+
+        res.json({
+            attackLogs,
+            attackPatterns,
+            total: attackLogs.length
+        });
+    } catch (error) {
+        console.error('Attack logs error:', error);
+        res.status(500).json({ error: 'Failed to fetch attack logs' });
     }
 });
 
