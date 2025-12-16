@@ -15,7 +15,7 @@
 
 We provide a safe, controlled ecosystem where security researchers, red teamers, and developers can master the dark arts of **Prompt Engineering**, **Model Manipulation**, and **AI Red Teaming**.
 
-**Are you ready to exploit the ghost in the machine?**
+**Are you ready to exploit the  ghost in the machine?**
 
 ---
 
